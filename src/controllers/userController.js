@@ -21,24 +21,10 @@ export async function signUp (req, res){
   
       if (!email || !password) {
         return res.sendStatus(422);
-      }
+      }    
+      
   
-      const { rows } = await connection.query(
-        `SELECT * FROM "users" WHERE "email"=$1`,
-        [email]
-      );
-      const [user] = rows;
-  
-      if (!user || !bcrypt.compareSync(password, user.password)) {
-        return res.sendStatus(401);
-      }
-  
-      const token = jwt.sign(
-        {
-          id: user.id,
-        },
-        process.env.JWT_SECRET
-      );
+     const token = await userService.signIn({email,password});
   
       res.send({
         token,
