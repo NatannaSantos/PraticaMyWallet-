@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import cors from "cors";
 import express from "express";
 import jwt from "jsonwebtoken";

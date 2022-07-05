@@ -1,23 +1,13 @@
+import * as userService from "../services/userService.js";
+
 export async function signUp (req, res){
     try {
       const { name, email, password } = req.body;
   
       if (!name || !email || !password) {
         return res.sendStatus(422);
-      }  
-      
-  
-      if (existingUsers.rowCount > 0) {
-        return res.sendStatus(409);
-      }
-  
-      const hashedPassword = bcrypt.hashSync(password, 12);
-  
-      await connection.query(
-        `INSERT INTO "users" ("name", "email", "password") VALUES ($1, $2, $3)`,
-        [name, email, hashedPassword]
-      );
-  
+      }          
+      await userService.signUp({name,email,password});
       res.sendStatus(201);
     } catch (err) {
       console.error(err);
